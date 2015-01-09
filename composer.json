@@ -1,0 +1,23 @@
+{
+    "name": "eanekrasov/yii2-widgets",
+    "description": "Some of widgets for Yii2",
+    "keywords": ["yii2", "extension", "widget", "form"],
+    "homepage": "https://github.com/eanekrasov/yii2-widgets",
+    "type": "yii2-extension",
+    "license": "BSD 3-Clause",
+    "authors": [
+        {
+            "name": "Coder",
+            "email": "coder@1dea.ru",
+            "homepage": "http://coder.1dea.ru/"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "eanekrasov\\widgets\\": ""
+        }
+    }
+}
