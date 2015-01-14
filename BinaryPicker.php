@@ -1,8 +1,6 @@
 <?php
 
 namespace eanekrasov\widgets;
-use yii\bootstrap\BootstrapAsset;
-use yii\bootstrap\Button;
 use yii\bootstrap\Widget;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -27,7 +25,7 @@ use yii\helpers\Html;
 class BinaryPicker extends Widget
 {
     /*
-     * @var object model
+     * @var \yii\db\ActiveRecord model
      */
     public $model = null;
 
@@ -45,11 +43,11 @@ class BinaryPicker extends Widget
     public $itemOptions = ['class' => 'checkbox-inline'];
 
     public $expertMode = true;
-    public $expertEnabled = true;
+    public $expertEnabled = false;
     public $expertOptions = ['label' => 'Expert Mode'];
 
     public $containerTag = 'div';
-    public $containerOptions = [];
+    public $containerOptions = ['class' => 'container'];
 
     protected function _val() {
         return $this->model->{$this->attribute};
@@ -73,10 +71,10 @@ class BinaryPicker extends Widget
         if ($this->expertMode) {
             $items[] = Html::checkbox('expert', $this->expertEnabled, $this->expertOptions);
         }
-        $items[] = Html::textInput($this->attribute, $this->_val(), $this->inputOptions);
+        $items[] = Html::activeTextInput($this->model, $this->attribute, $this->inputOptions);
         $items[] = Html::tag($this->containerTag, $this->renderItems($this->items), $this->containerOptions);
         echo Html::tag($this->tag, implode("\n", $items), $this->options);
-        BootstrapAsset::register($this->getView());
+        BinaryPickerAsset::register($this->getView());
     }
 
     /**
@@ -88,9 +86,9 @@ class BinaryPicker extends Widget
         foreach ($data as $key=>$item) {
             $pow = pow(2, $key);
             if (is_array($item)) {
-                $options = ArrayHelper::merge([], $item);
+                $options = ArrayHelper::merge(['data-value' => $pow], $item);
                 $item['view'] = $this->getView();
-                $checkbox = Html::checkbox($this->attribute . $pow, $this->_val() && $pow, $options);
+                $checkbox = Html::checkbox($this->attribute . $pow, ($this->_val() & $pow) == $pow, $options);
                 $items[] = Html::tag($this->itemTag, $checkbox, $this->itemOptions);
             } else {
                 $items[] = $item;
