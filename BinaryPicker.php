@@ -42,7 +42,7 @@ class BinaryPicker extends Widget
     public $itemTag = 'div';
     public $itemOptions = ['class' => 'checkbox-inline'];
 
-    public $expertMode = true;
+    public $expertMode = false;
     public $expertEnabled = false;
     public $expertOptions = ['label' => 'Expert Mode'];
 
@@ -88,7 +88,7 @@ class BinaryPicker extends Widget
             if (is_array($item)) {
                 $options = ArrayHelper::merge(['data-value' => $pow], $item);
                 $item['view'] = $this->getView();
-                $checkbox = Html::checkbox($this->attribute . $pow, ($this->_val() & $pow) == $pow, $options);
+                $checkbox = Html::checkbox(null, ($this->_val() & $pow) == $pow, $options);
                 $items[] = Html::tag($this->itemTag, $checkbox, $this->itemOptions);
             } else {
                 $items[] = $item;
